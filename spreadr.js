@@ -24,8 +24,7 @@ for (var i = 0; i < files.length; i++) {
             secureOptions: constants.SSL_OP_NO_SSLv3,
             key: config.https_private_key,
             cert: config.https_certificate,
-            ca: config.https_ca_certificate,
-            ecdhCurve: 'prime256v1'
+            ca: config.https_ca_certificate
         });
 
     }
