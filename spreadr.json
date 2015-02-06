@@ -1,0 +1,6 @@
+{
+	"http_port": "80",
+	"https_port": "443",
+	"https_default_key": "default.key",
+	"https_default_crt": "default.crt"
+}

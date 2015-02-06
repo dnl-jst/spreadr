@@ -1,0 +1,15 @@
+{
+  "hostname": "example.org",
+
+  "target_http_hostname": "www1.example.org",
+  "target_http_port": 80,
+
+  "https": false,
+  "https_private_key": "",
+  "https_certificate": "",
+  "https_ca_ertificate": "",
+
+  "target_https_hostname": "www1.example.org",
+  "target_https_port": 443,
+  "target_https_check_certificate": true
+}
