@@ -1,7 +1,7 @@
 {
   "hostname": "example.org",
 
-  "target_http_hostname": "www1.example.org",
+  "target_http_hostname": "example.org",
   "target_http_port": 80,
 
   "https": false,
