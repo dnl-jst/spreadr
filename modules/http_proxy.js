@@ -156,17 +156,17 @@ exports.start = function(config, clientConfigs) {
         secureOptions: constants.SSL_OP_NO_SSLv3,
         key: fs.readFileSync(path.resolve(__dirname) + '/../' + config.https_default_key),
         cert: fs.readFileSync(path.resolve(__dirname) + '/../' + config.https_default_crt),
-        SNICallback: function(hostname) {
+        SNICallback: function(hostname, cb) {
 
             if (clientConfigs[hostname] != undefined && clientConfigs[hostname].httpsContext != null) {
 
                 console.log('found https context for ' + hostname);
-                return clientConfigs[hostname].httpsContext;
+                cb(null, clientConfigs[hostname].httpsContext);
 
             } else {
 
                 console.log('no https context for domain ' + hostname);
-                return null;
+                cb(null, null);
 
             }
         }
