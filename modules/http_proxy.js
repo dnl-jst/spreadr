@@ -1,7 +1,6 @@
 var fs = require('fs'),
     path = require('path'),
     util = require('util'),
-    zlib = require('zlib'),
     http = require('http'),
     https = require('https'),
     http2 = require('http2'),
