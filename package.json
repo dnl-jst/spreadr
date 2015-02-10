@@ -6,7 +6,7 @@
     "start": "node spreadr.js"
   },
   "dependencies": {
-    "spdy": "^1.29.1"
+    "http2": "^3.1.1"
   },
   "repository": {
     "type": "git",

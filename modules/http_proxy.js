@@ -4,7 +4,7 @@ var fs = require('fs'),
     zlib = require('zlib'),
     http = require('http'),
     https = require('https'),
-    spdy = require('spdy'),
+    http2 = require('http2'),
     constants = require('constants');
 
 exports.start = function(config, clientConfigs) {
@@ -18,7 +18,7 @@ exports.start = function(config, clientConfigs) {
         var requestHost = request.headers.host;
         var requestMethod = request.method;
         var requestUrl = path.normalize(request.url);
-        var requestString = '"' + request.method + ' ' + requestUrl + ' ' + ((request.isSpdy) ? 'SPDY' : 'HTTP') + '/' + request.httpVersion + '"';
+        var requestString = '"' + request.method + ' ' + requestUrl + ' HTTP/' + request.httpVersion + '"';
         var encryptionString = '"' + ((request.connection.encrypted != undefined) ? request.connection.getCipher().name + ' ' + request.connection.getCipher().version : '-') + '"';
         var acceptGzip = (request.headers['accept-encoding'] !== undefined) && (request.headers['accept-encoding'].indexOf('gzip') >= 0);
 
@@ -176,7 +176,7 @@ exports.start = function(config, clientConfigs) {
         httpsOptions.ca = fs.readFileSync(path.resolve(__dirname) + '/../' + config.https_default_ca_crt);
     }
 
-    var httpsServer = spdy.createServer(httpsOptions, requestHandler);
+    var httpsServer = http2.createServer(httpsOptions, requestHandler);
     httpsServer.listen(config.https_port, '::');
 
     console.log('listening on port ' + config.http_port + ' (http), ' + config.https_port + ' (https)');
