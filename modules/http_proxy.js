@@ -20,7 +20,6 @@ exports.start = function(config, clientConfigs) {
         var requestUrl = path.normalize(request.url);
         var requestString = '"' + request.method + ' ' + requestUrl + ' HTTP/' + request.httpVersion + '"';
         var encryptionString = '"' + ((request.connection.encrypted != undefined) ? request.connection.getCipher().name + ' ' + request.connection.getCipher().version : '-') + '"';
-        var acceptGzip = (request.headers['accept-encoding'] !== undefined) && (request.headers['accept-encoding'].indexOf('gzip') >= 0);
 
         var responseHeaders = {};
         var responseLength = 0;
@@ -59,10 +58,10 @@ exports.start = function(config, clientConfigs) {
         }
 
         var clientConfig = clientConfigs[requestHost];
+
         var headers = request.headers;
 
         headers['spreadr-connecting-ip'] = request.connection.remoteAddress;
-        headers['accept-encoding'] = 'gzip';
 
         if (!headers['x-forwarded-for']) {
             headers['x-forwarded-for'] = request.connection.remoteAddress;
@@ -70,39 +69,9 @@ exports.start = function(config, clientConfigs) {
 
         var proxyHandler = function(proxyResponse) {
 
-            var responseStatusCode = proxyResponse.statusCode;
-            responseHeaders = proxyResponse.headers;
+            response.writeHead(proxyResponse.statusCode, proxyResponse.headers);
+            proxyResponse.pipe(response);
 
-            var zipStream;
-            var unzipStream;
-
-            if (acceptGzip && (responseHeaders['content-encoding'] == undefined || responseHeaders['content-encoding'].indexOf('gzip') == -1)) {
-
-                responseHeaders['content-encoding'] = 'gzip';
-
-                if (responseHeaders['content-length'] != undefined) {
-                    delete responseHeaders['content-length'];
-                }
-
-                response.writeHead(responseStatusCode, responseHeaders);
-
-                zipStream = zlib.createGzip();
-                proxyResponse.pipe(zipStream).pipe(response);
-
-            } else if (!acceptGzip && responseHeaders['content-encoding'] != undefined && responseHeaders['content-encoding'].indexOf('gzip') >= 0) {
-
-                delete responseHeaders['content-encoding'];
-
-                response.writeHead(responseStatusCode, responseHeaders);
-
-                unzipStream = zlib.createGunzip();
-                proxyResponse.pipe(unzipStream).pipe(response);
-
-            } else {
-
-                response.writeHead(responseStatusCode, responseHeaders);
-                proxyResponse.pipe(response);
-            }
         };
 
         var proxy_options = {
@@ -120,7 +89,7 @@ exports.start = function(config, clientConfigs) {
 
             proxy_options.hostname = clientConfig.target_https_hostname;
             proxy_options.port = clientConfig.target_https_port;
-            proxy_options.rejectUnauthorized = clientConfig.target_https_check_certificate
+            proxy_options.rejectUnauthorized = clientConfig.target_https_check_certificate;
 
             proxyRequest = https.request(proxy_options, proxyHandler);
 
@@ -129,11 +98,6 @@ exports.start = function(config, clientConfigs) {
             proxyRequest = http.request(proxy_options, proxyHandler);
 
         }
-
-        // set socket timeout to 1 minute
-        proxyRequest.on('socket', function(socket) {
-            socket.setTimeout(60000);
-        });
 
         proxyRequest.on('error', function (err) {
 
