@@ -1,5 +1,5 @@
 {
-  "hostname": "example.org",
+  "hostnames": ["example.org", "www.example.org"],
 
   "target_http_hostname": "example.org",
   "target_http_port": 80,

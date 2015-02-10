@@ -29,7 +29,9 @@ for (var i = 0; i < files.length; i++) {
 
     }
 
-    clientConfigs[clientConfig.hostname] = clientConfig;
+    for (var j = 0; j < clientConfig.hostnames.length; j++) {
+        clientConfigs[clientConfig.hostnames[j]] = clientConfig;
+    }
 
 }
 
