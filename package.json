@@ -1,6 +1,6 @@
 {
   "name": "spreadr",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "spread http(s) requests to different hosts with sni ssl support",
   "scripts": {
     "start": "node spreadr.js"
@@ -15,6 +15,6 @@
   "author": "Daniel Jost <dj@jost-solutions.de>",
   "license": "MIT",
   "engines": {
-    "node": "0.10.x"
+    "node": "0.12.x"
   }
 }
