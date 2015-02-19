@@ -1,6 +1,6 @@
 {
   "name": "spreadr",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "spread http(s) requests to different hosts with sni ssl support",
   "scripts": {
     "start": "node spreadr.js"
