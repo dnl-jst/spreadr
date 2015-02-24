@@ -2,30 +2,40 @@ var cluster = require('cluster'),
     os = require('os'),
     fs = require('fs'),
     path = require('path'),
-    httpProxy = require('./modules/http_proxy.js');
+    httpProxy = require('./lib/http_proxy.js'),
+    constants = require('constants'),
+    tls = require('tls');
 
-var config = require(path.resolve(__dirname) + '/spreadr.json');
+var config = require(path.resolve(__dirname, 'configs/spreadr.json'));
 var clientConfigs = {};
 
-var files = fs.readdirSync(path.resolve(__dirname, 'configs/'));
+var vhostFolder = path.resolve(__dirname, 'configs/virtual_hosts/');
+var vhostFolders = fs.readdirSync(vhostFolder);
 
-for (var i = 0; i < files.length; i++) {
+for (var i = 0; i < vhostFolders.length; i++) {
 
-    if (path.extname(files[i]) != '.json') {
+    var configFile = vhostFolder + '/' + vhostFolders[i] + '/config.json';
+
+    if (!fs.existsSync(configFile)) {
         continue;
     }
 
-    var clientConfig = require(path.resolve(__dirname, 'configs/') + '/' + files[i]);
+    var clientConfig = require(vhostFolder + '/' + vhostFolders[i] + '/config.json');
 
     if (clientConfig.https) {
 
-        clientConfig.httpsContext = tls.createSecureContext({
+        var secureContextOptions = {
             secureProtocol: 'SSLv23_method',
             secureOptions: constants.SSL_OP_NO_SSLv3,
-            key: config.https_private_key,
-            cert: config.https_certificate,
-            ca: config.https_ca_certificate
-        });
+            key: fs.readFileSync(vhostFolder + '/' + vhostFolders[i] + '/' + clientConfig.https_private_key),
+            cert: fs.readFileSync(vhostFolder + '/' + vhostFolders[i] + '/' + clientConfig.https_certificate)
+        };
+
+        if (clientConfig.https_ca_certifcate !== undefined && clientConfig.https_ca_certificate) {
+            secureContextOptions.ca = fs.readFileSync(vhostFolder + '/' + vhostFolders[i] + '/' + clientConfig.https_ca_certificate);
+        }
+
+        clientConfig.httpsContext = tls.createSecureContext(secureContextOptions);
 
     }
 

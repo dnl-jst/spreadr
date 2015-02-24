@@ -1,15 +1,15 @@
 {
   "hostnames": ["example.org", "www.example.org"],
 
-  "target_http_hostname": "example.org",
+  "target_http_hostname": "93.184.216.34",
   "target_http_port": 80,
 
-  "https": false,
-  "https_private_key": "",
-  "https_certificate": "",
+  "https": true,
+  "https_private_key": "default.key",
+  "https_certificate": "default.crt",
   "https_ca_ertificate": "",
 
-  "target_https_hostname": "example.org",
+  "target_https_hostname": "93.184.216.34",
   "target_https_port": 443,
   "target_https_check_certificate": true
 }
