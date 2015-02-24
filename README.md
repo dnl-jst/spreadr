@@ -1,2 +1,20 @@
 # spreadr
-spread http(s) requests to different hosts with sni ssl support
+spread http(s) requests to different hosts based on hostname with http2 and sni ssl support
+
+## features
+
+- define any number of virtual hosts containing any number of aliases
+- define non-ssl and ssl target-hostname
+- allow to define specific port for non-ssl and ssl target
+- define ssl-context per virtual host, allowing to forward ssl-requests (sni, server name indication)
+- define whether to allow invalid certificates on ssl target host (per virtual host)
+- http/2 support (via NPN, ALPN not supported yet, see https://github.com/joyent/node/issues/5945)
+- support for multiple cpu-cores, will spawn as many workers as cpu-cores available
+
+## how-to use
+
+Clone repository, look at configs/example.org.json and define as many additional files as you want.
+
+When done, fire up spreadr with
+
+	node spreadr.js
