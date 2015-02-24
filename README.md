@@ -17,4 +17,6 @@ Clone repository, look at configs/example.org.json and define as many additional
 
 When done, fire up spreadr with
 
-	node spreadr.js
+	sudo node spreadr.js
+
+You need to sudo because spreadr listens on port 80 & 443 and you need root access to bind on ports lower than 1024. If you want to listen on other ports, you may want to edit the spreadr.json file in root folder.
