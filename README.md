@@ -23,3 +23,15 @@ When done, fire up spreadr with
 	sudo node spreadr.js
 
 You need to sudo because spreadr listens on port 80 & 443 and you need root access to bind on ports lower than 1024. If you want to listen on other ports, you may want to edit the spreadr.json file in root folder.
+
+### run as docker container
+
+Pull latest docker image:
+
+    docker pull dnljst/spreadr
+
+Start your machine:
+
+    docker run -d -p 80:80 -p 443:443 --name my-spreadr-container dnljst/spreadr
+
+This command creates a new docker container based on the spreadr image named "my-spreadr-container" and exposes ports 80 and 443 to the new container.
