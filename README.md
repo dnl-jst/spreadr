@@ -35,3 +35,25 @@ Start your machine:
     docker run -d -p 80:80 -p 443:443 --name my-spreadr-container dnljst/spreadr
 
 This command creates a new docker container based on the spreadr image named "my-spreadr-container" and exposes ports 80 and 443 to the new container.
+
+### run as docker container with custom configuration
+
+Clone spreadr to your docker machine:
+
+    git clone https://github.com/dnl-jst/spreadr.git && cd spreadr
+
+Edit configuration files, for example:
+
+    vim configs/example.org/config.json
+
+When changes are done, build your custom docker image with your configuration:
+
+    docker build -t my-custom-spreadr-configuration .
+
+You build your own image named "my-custom-spreadr-configuration". You can change that name to whatever you want.
+
+Now you can run your custom container like this:
+
+    docker run -d -p 80:80 -p 443:443 --name my-custom-spreadr-container my-custom-spreadr-configuration
+
+This will run a new docker container named "my-custom-spreadr-container" with our own image "my-custom-spreadr-configuration".
