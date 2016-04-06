@@ -1,4 +1,7 @@
 # spreadr
+
+[![Travis](https://img.shields.io/travis/dnl-jst/spreadr.svg)](https://travis-ci.org/dnl-jst/spreadr) [![David](https://img.shields.io/david/dnl-jst/spreadr.svg)](https://david-dm.org/dnl-jst/spreadr) [![npm](https://img.shields.io/npm/v/spreadr.svg)](https://www.npmjs.com/package/spreadr)
+
 spread http(s) requests to different hosts based on hostname with http2 and sni ssl support
 
 ## features
