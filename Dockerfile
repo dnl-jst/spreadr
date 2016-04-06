@@ -1,3 +1,3 @@
-FROM node:0.12-onbuild
+FROM node:4.4-onbuild
 EXPOSE 80
 EXPOSE 443

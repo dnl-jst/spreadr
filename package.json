@@ -1,21 +1,21 @@
 {
   "name": "spreadr",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "spread http(s) requests to different hosts based on hostname with http2 and sni ssl support",
   "scripts": {
     "start": "node spreadr.js"
   },
   "main": "spreadr",
   "dependencies": {
-    "http2": "^3.2.0"
+    "http2": "^3.3.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/dnl-jst/spreadr.git"
   },
-  "author": "Daniel Jost <dj@jost-solutions.de>",
+  "author": "Daniel Jost <info@daniel-jost.de>",
   "license": "MIT",
   "engines": {
-    "node": "0.12.x"
+    "node": "4.4.x"
   }
 }
