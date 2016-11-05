@@ -7,7 +7,7 @@
   },
   "main": "spreadr",
   "dependencies": {
-    "http2": "^3.3.2"
+    "http2": "^3.3.6"
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,6 @@
   "author": "Daniel Jost <info@daniel-jost.de>",
   "license": "MIT",
   "engines": {
-    "node": "5.x"
+    "node": "6.x"
   }
 }
